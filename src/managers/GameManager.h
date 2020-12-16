@@ -34,6 +34,7 @@ public:
     void render();
     void quit();
     bool getIsRunning() const;
+    void setIsRunning(bool _new);
     Player *m_player;
     Skybox *m_skybox;
     PlayerHUD *playerHud;

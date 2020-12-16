@@ -73,7 +73,7 @@ GameManager::initialize(const char *_windowTitle, int _windowPosX, int _windowPo
     m_player = new Player(25, -25);
     m_skybox = new Skybox();
 
-    GameManager::isRunning = true; // start game loop
+    //GameManager::isRunning = true; // start game loop
 }
 
 void GameManager::handleEvents() {
@@ -118,6 +118,11 @@ void GameManager::handleEvents() {
     }
     if (state[SDL_SCANCODE_C]) {
         m_player->move(Direction::DOWN, -1);
+    }
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        if(((SDL_MouseButtonEvent&)event).button == SDL_BUTTON_LEFT){
+            SDL_Log("CLIC");
+        }
     }
 
     if (isColliding) {
@@ -180,4 +185,8 @@ void GameManager::quit() {
 
 bool GameManager::getIsRunning() const {
     return isRunning;
+}
+
+void GameManager::setIsRunning(bool _new){
+    isRunning = _new;
 }
