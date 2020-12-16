@@ -27,8 +27,10 @@ void UiManager::update(Player *_player) {
 }
 
 void UiManager::renderWeapon(const int weapon_nb, const double& X, const double& Y, const double& Z, const double& width, const double& height) {
-
     glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(3.f, 1.f, -22.f, 3.f, 1.f , 0, 0, 1, 0);
     glBindTexture(GL_TEXTURE_2D, weapon_1);
     glTranslatef(X, 1, Z);
     glBegin(GL_QUADS);
@@ -49,6 +51,10 @@ void UiManager::renderWeapon(const int weapon_nb, const double& X, const double&
 void UiManager::renderText(const TTF_Font *Font, const GLubyte& R, const GLubyte& G, const GLubyte& B, const double& X,
                            const double& Y, const double& Z, const std::string& Text) {
     glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(-15.f, -7.f, -22.f, -15.f, -7.f , 0, 0, 1, 0);
+
     SDL_Color Color = {R, G, B};
     SDL_Surface *Message = TTF_RenderText_Blended(const_cast<TTF_Font*>(Font), Text.c_str(), Color);
     unsigned Texture = 0;
@@ -71,6 +77,7 @@ void UiManager::renderText(const TTF_Font *Font, const GLubyte& R, const GLubyte
     glTexCoord2d(0, 1); glVertex3d(X, Y+Message->h*.7f, Z);
 
     glEnd();
+
     glPopMatrix();
 
     glDeleteTextures(1, &Texture);
@@ -79,13 +86,13 @@ void UiManager::renderText(const TTF_Font *Font, const GLubyte& R, const GLubyte
 
 void UiManager::render() {
     glViewport(0, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // health
-    renderText(font, 255, 255, 255, -41, -15, 0, to_string(health) + "hp");
+    renderText(font, 255, 255, 255, 0, 0, 0, to_string(health) + "hp");
 
     glViewport(SCREEN_WIDTH/4.f, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // weapon sprite
-    renderWeapon(0, 30, 0, 0, 15, 15);
+    renderWeapon(0, 0, 0, 0, 15, 15);
 
     glViewport((SCREEN_WIDTH/4.f)*2, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // ammo
-    renderText(font, 255, 0, 0, -40, -15, 0, to_string(ammo));
+    renderText(font, 255, 0, 0, 5, 0, 0, to_string(ammo));
 
     glViewport((SCREEN_WIDTH/4.f)*4, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // score
 
