@@ -120,7 +120,6 @@ void GameManager::handleEvents() {
         }
     }
 
-
     m_player->move(ROTATE, dxMouse);
 
     if (event.type == SDL_QUIT || state[SDL_SCANCODE_ESCAPE]) {
