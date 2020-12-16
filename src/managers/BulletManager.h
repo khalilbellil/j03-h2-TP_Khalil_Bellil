@@ -13,11 +13,12 @@
 using namespace std;
 
 class BulletManager {
-    static vector<Bullet*> m_vecBullet;
+
     static float m_size;
     static int enemiesKilled;
     static int enemiesToKill;
 public:
+    static vector<Bullet*> m_vecBullet;
     ~BulletManager();
     static void update();
     static void draw();

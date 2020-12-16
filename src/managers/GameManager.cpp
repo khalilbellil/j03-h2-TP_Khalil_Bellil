@@ -107,13 +107,19 @@ void GameManager::handleEvents() {
     float oldPlayerRefX = m_player->getRefX();
     float oldPlayerRefZ = m_player->getRefZ();
 
-    for (int i = 0; i < WallManager::getWalls().size(); ++i) {
+    for (int j = 0; j < WallManager::getWalls().size(); ++j) {
         isColliding = CollisionManager::checkSphereCollisions(m_player->getSphereCollider(),
-                                                              WallManager::getWalls()[i]->getSphereCollider());
+                                                              WallManager::getWalls()[j]->getSphereCollider());
+        for (int i = 0; i < BulletManager::m_vecBullet.size(); ++i) {
+            if(CollisionManager::checkSphereCollisions(BulletManager::m_vecBullet[i]->getSphereCollider(), WallManager::getWalls()[j]->getSphereCollider())){
+                BulletManager::m_vecBullet.erase(BulletManager::m_vecBullet.begin() + i);
+            }
+        }
         if (isColliding) {
             break;
         }
     }
+
 
     m_player->move(ROTATE, dxMouse);
 
