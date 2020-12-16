@@ -15,11 +15,13 @@ using namespace std;
 class BulletManager {
     static vector<Bullet*> m_vecBullet;
     static float m_size;
+    static int enemiesKilled;
+    static int enemiesToKill;
 public:
     ~BulletManager();
     static void update();
     static void draw();
-    static void checkCollision(vector<Enemy*> _m_vecBullet);
+    static bool checkCollision(vector<Enemy*> _m_vecBullet);
     static void add(float _xPos, float _yPos, float _zPos, float _xDir, float _yDir, float _zDir, float _angle);
 };
 

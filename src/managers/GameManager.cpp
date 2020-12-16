@@ -110,10 +110,12 @@ void GameManager::handleEvents() {
     if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
         m_player->move(Direction::RIGHT, -1);
     }
-    if (state[SDL_SCANCODE_E]) {
-        //m_player->move(Direction::UP, -1);
-        BulletManager::add(m_player->getCamX(), m_player->getCamY(), m_player->getCamZ(), m_player->getRefX(),
-                           m_player->getRefY(), m_player->getRefZ(), m_player->getAlpha());
+    if (state[SDL_SCANCODE_E]) {//SHOOT
+        if(m_player->getAmmo() > 0){
+            BulletManager::add(m_player->getCamX(), m_player->getCamY(), m_player->getCamZ(), m_player->getRefX(),
+                               m_player->getRefY(), m_player->getRefZ(), m_player->getAlpha());
+            m_player->setAmmo(-1);
+        }
     }
     if (state[SDL_SCANCODE_C]) {
         m_player->move(Direction::DOWN, -1);
@@ -139,7 +141,9 @@ void GameManager::update() {
         i++;
     }
     BulletManager::update();
-    BulletManager::checkCollision(enemies);
+    if(BulletManager::checkCollision(enemies)){
+        isRunning = false;
+    }
 }
 
 void GameManager::render() {
@@ -168,7 +172,6 @@ void GameManager::render() {
 
     glFlush();
     SDL_GL_SwapWindow(window);
-    //SDL_Delay(15);
 }
 
 void GameManager::quit() {

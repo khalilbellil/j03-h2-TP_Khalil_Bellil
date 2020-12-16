@@ -21,7 +21,7 @@ void EnemyManager::initialize() {
         glTranslatef(xPos, yPos, zPos);
         for (int i = 0; i < ReadFromFile::getLineCount(); ++i) {
             for (int j = 0; j < ReadFromFile::getLineLength(); ++j) {
-                value = rand() % 300;
+                value = rand() % 50;
                 std::string index = MapManager::getMapStrings().at(i);
                 int textureId = index.at(j) - 48;
 

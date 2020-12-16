@@ -13,7 +13,7 @@
 class EnemyManager {
     static bool isInitialized;
     static int cpt;
-    static const int maxEnemies = 30;
+    static const int maxEnemies = 80;
 public:
     static std::map<int, Enemy *> s_enemies;
 
