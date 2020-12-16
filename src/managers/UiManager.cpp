@@ -92,10 +92,14 @@ void UiManager::render() {
     renderWeapon(0, 0, 0, 0, 15, 15);
 
     glViewport((SCREEN_WIDTH/4.f)*2, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // ammo
-    renderText(font, 255, 0, 0, 5, 0, 0, to_string(ammo));
+    if(ammo <= 0){
+        renderText(font, 0, 0, 255, 5, 0, 0, to_string(ammo));
+    }else{
+        renderText(font, 255, 0, 0, 5, 0, 0, to_string(ammo));
+    }
 
-    glViewport((SCREEN_WIDTH/4.f)*4, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // score
-
+    glViewport((SCREEN_WIDTH/4.f)*3, 0, SCREEN_WIDTH/4.f, SCREEN_HEIGHT/6.f); // score
+    renderText(font, 0, 255, 0, 0, 0, 0, to_string(score) + "/5");
 }
 
 void UiManager::quit() {

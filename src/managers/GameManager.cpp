@@ -164,8 +164,11 @@ void GameManager::update() {
         i++;
     }
     BulletManager::update();
-    if(BulletManager::checkCollision(enemies)){
+    int res = BulletManager::checkCollision(enemies);
+    if(res == -1){
         isRunning = false;
+    }else{
+        uiManager->setScore(res);
     }
 }
 

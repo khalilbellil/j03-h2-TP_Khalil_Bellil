@@ -15,8 +15,7 @@ void BulletManager::draw() {
         p->render();
 }
 
-bool BulletManager::checkCollision(vector<Enemy*> _m_vecBullet) {
-    bool end = false;
+int BulletManager::checkCollision(vector<Enemy*> _m_vecBullet) {
     for(auto it = m_vecBullet.begin(); it != m_vecBullet.end();){
         for(auto it2 = _m_vecBullet.begin(); it2 != _m_vecBullet.end();){
             if(CollisionManager::checkSphereCollisions((*it2)->getSphereCollider(), (*it)->getSphereCollider())){
@@ -27,7 +26,7 @@ bool BulletManager::checkCollision(vector<Enemy*> _m_vecBullet) {
                     enemiesKilled++;
                 }else{
                     SDL_Log("You Won !");
-                    return true;
+                    return -1;
                 }
             }
             else{
@@ -36,7 +35,7 @@ bool BulletManager::checkCollision(vector<Enemy*> _m_vecBullet) {
         }
         ++it;
     }
-    return end;
+    return enemiesKilled;
 }
 
 void BulletManager::add(float _xPos, float _yPos, float _zPos, float _xDir, float _yDir, float _zDir, float _angle) {
