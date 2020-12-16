@@ -13,7 +13,7 @@ Bullet::Bullet(float _xStartPos, float _yStartPos, float _zStartPos, float _xDir
     xPos = 0;
     yPos = 1.f;
     zPos = 0;
-    speed = .1f;
+    speed = 1.f;
     xDir = _xDir;
     yDir = _yDir;
     zDir = _zDir;

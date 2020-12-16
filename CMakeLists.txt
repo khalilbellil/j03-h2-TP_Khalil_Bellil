@@ -28,6 +28,7 @@ if (WIN32)
             -lopengl32
             -lglu32
             -lSDL2_ttf
+            -lSDL2_mixer
     )
 endif ()
 if(UNIX)
@@ -39,5 +40,6 @@ if(UNIX)
             -lGL
             -lGLU
             -lSDL2_ttf
+            -lSDL2_mixer
     )
 endif()

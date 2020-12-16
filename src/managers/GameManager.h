@@ -16,6 +16,9 @@
 #include "../managers/UiManager.h"
 #include "EnemyManager.h"
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+#include <stdio.h>
+#include <string>
 
 class GameManager {
 private:
@@ -26,10 +29,20 @@ private:
     const Uint8* state;
     int dxMouse, dyMouse;
     UiManager* uiManager;
+
+    //The music that will be played
+    Mix_Music *gMusic = NULL;
+
+    //The sound effects that will be used
+    Mix_Chunk *gScratch = NULL;
+    Mix_Chunk *gHigh = NULL;
+    Mix_Chunk *gMedium = NULL;
+    Mix_Chunk *gLow = NULL;
 public:
     SDL_Window *window;
     GameManager();
     virtual ~GameManager();
+    bool loadMedia();
     void initialize(const char* _windowTitle, int _windowPosX, int _windowPosY, int _screenWidth, int _screenHeight, bool fullScreen);
     void handleEvents();
     void update();

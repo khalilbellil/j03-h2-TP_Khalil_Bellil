@@ -8,6 +8,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "GameManager.h"
 
+
 class MenuManager {
     private:
         SDL_Window *window;

@@ -25,6 +25,22 @@ GameManager::~GameManager() {
     delete uiManager;
 }
 
+bool GameManager::loadMedia()
+{
+    //Loading success flag
+    bool success = true;
+
+    //Load music
+    gLow = Mix_LoadWAV( "assets/sounds/gun.wav" );
+    if( gLow == NULL )
+    {
+        printf( "Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+
+    return success;
+}
+
 void
 GameManager::initialize(const char *_windowTitle, int _windowPosX, int _windowPosY, int _screenWidth, int _screenHeight,
                         bool fullScreen) {
@@ -33,6 +49,10 @@ GameManager::initialize(const char *_windowTitle, int _windowPosX, int _windowPo
     }
     if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
         SDL_Log("IMG_Init Failed : ", IMG_GetError());
+    }
+    if(Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -62,6 +82,8 @@ GameManager::initialize(const char *_windowTitle, int _windowPosX, int _windowPo
     glAlphaFunc(GL_GREATER, 0.1);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
+    loadMedia();
 
     playerHud = new PlayerHUD();
 
@@ -112,6 +134,7 @@ void GameManager::handleEvents() {
     }
     if (state[SDL_SCANCODE_E]) {//SHOOT
         if(m_player->getAmmo() > 0){
+            Mix_PlayChannel( -1, gLow, 0 );
             BulletManager::add(m_player->getCamX(), m_player->getCamY(), m_player->getCamZ(), m_player->getRefX(),
                                m_player->getRefY(), m_player->getRefZ(), m_player->getAlpha());
             m_player->setAmmo(-1);
@@ -175,6 +198,18 @@ void GameManager::render() {
 }
 
 void GameManager::quit() {
+    //Free the sound effects
+    Mix_FreeChunk( gScratch );
+    Mix_FreeChunk( gHigh );
+    Mix_FreeChunk( gMedium );
+    Mix_FreeChunk( gLow );
+    gScratch = NULL;
+    gHigh = NULL;
+    gMedium = NULL;
+    gLow = NULL;
+    Mix_FreeMusic( gMusic );
+    gMusic = NULL;
+
     TextureManager::clear();
     MapManager::destructor();
     WallManager::destructor();
@@ -184,6 +219,7 @@ void GameManager::quit() {
     context = nullptr;
     SDL_DestroyWindow(window);
     window = nullptr;
+    Mix_Quit();
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
