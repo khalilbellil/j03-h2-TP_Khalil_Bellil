@@ -39,10 +39,12 @@ public:
     void setCamX(float camX);
     void setCamZ(float camZ);
     float getCamX();
+    float getCamY();
     float getCamZ();
     void setRefX(float refX);
     void setRefZ(float refZ);
     float getRefX();
+    float getRefY();
     float getRefZ();
     float getAlpha();
 
@@ -50,6 +52,8 @@ public:
     int getAmmo();
     void setHP(int i);
     void setAmmo(int i);
+
+    void shoot();
 };
 
 #endif //J03_SU_H20_GROUPTP_PLAYER_H

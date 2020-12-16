@@ -94,6 +94,10 @@ float Player::getCamX() {
     return m_camX;
 }
 
+float Player::getCamY() {
+    return m_camY;
+}
+
 float Player::getCamZ() {
     return m_camZ;
 }
@@ -108,6 +112,10 @@ void Player::setRefZ(float refZ) {
 
 float Player::getRefX() {
     return m_refX;
+}
+
+float Player::getRefY() {
+    return m_refY;
 }
 
 float Player::getRefZ() {
@@ -136,4 +144,8 @@ int Player::getHP() {
 
 int Player::getAmmo() {
     return m_Ammo;
+}
+
+void Player::shoot(){
+    SDL_Log("Shooting");
 }

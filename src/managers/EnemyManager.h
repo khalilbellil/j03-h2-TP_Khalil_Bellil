@@ -13,15 +13,14 @@
 class EnemyManager {
     static bool isInitialized;
     static int cpt;
-    static const int maxEnemies = 10;
+    static const int maxEnemies = 30;
 public:
     static std::map<int, Enemy *> s_enemies;
 
     static void initialize();
-
     static void update(Player target);
-
     static void clear();
+    static void draw();
 };
 
 #endif //J03_SU_H20_GROUPTP_ENEMYMANAGER_H

@@ -12,6 +12,7 @@
 #include "../entities/map/Skybox.h"
 #include "../entities/PlayerHUD.h"
 #include "../managers/PassiveManager.h"
+#include "../managers/BulletManager.h"
 #include "../managers/UiManager.h"
 #include "EnemyManager.h"
 #include <SDL2/SDL_ttf.h>

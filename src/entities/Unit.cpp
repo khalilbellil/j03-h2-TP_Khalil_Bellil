@@ -154,7 +154,6 @@ void Unit::update(Uint32 deltaTime, Player target, std::string nameT) {
             checkStamina();
         }
     }
-    draw(nameT);
 }
 
 void Unit::attack() {

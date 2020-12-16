@@ -102,3 +102,12 @@ void Enemy::handleTexture(EnemyAnimationType enemyAnimationType) {
             break;
     }
 }
+
+SphereCollider& Enemy::getSphereCollider() {
+    return m_sphereCollider;
+}
+
+void Enemy::update(Uint32 deltaTime, Player target, std::string nameT) {
+    Unit::update(deltaTime, target, nameT);
+    m_sphereCollider = {(float)m_posX, (float)m_posY, (float)m_posZ, 0.5};
+}

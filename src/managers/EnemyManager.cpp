@@ -41,6 +41,8 @@ void EnemyManager::initialize() {
         }
     }
     glPopMatrix();
+    EnemyManager::s_enemies.insert(
+            std::pair<int, Enemy *>(cpt++, new Enemy(EnemyType::Soldier, 25, -25)));
     if (cpt == maxEnemies) {
         isInitialized = true;
     }
@@ -49,6 +51,12 @@ void EnemyManager::initialize() {
 void EnemyManager::update(Player target) {
     for (auto it : s_enemies) {
         it.second->update(0, target, "soldier_forward_1");
+    }
+}
+
+void EnemyManager::draw() {
+    for (auto it : s_enemies) {
+        it.second->draw("soldier_forward_1");
     }
 }
 

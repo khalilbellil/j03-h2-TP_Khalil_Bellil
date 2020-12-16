@@ -72,8 +72,7 @@ GameManager::initialize(const char *_windowTitle, int _windowPosX, int _windowPo
     uiManager->init();
     m_player = new Player(25, -25);
     m_skybox = new Skybox();
-
-    //GameManager::isRunning = true; // start game loop
+    EnemyManager::initialize();
 }
 
 void GameManager::handleEvents() {
@@ -90,8 +89,6 @@ void GameManager::handleEvents() {
         isColliding = CollisionManager::checkSphereCollisions(m_player->getSphereCollider(),
                                                               WallManager::getWalls()[i]->getSphereCollider());
         if (isColliding) {
-            //Debug
-            //std::cout << "Collision " << i << std::endl;
             break;
         }
     }
@@ -113,31 +110,36 @@ void GameManager::handleEvents() {
     if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
         m_player->move(Direction::RIGHT, -1);
     }
-    if (state[SDL_SCANCODE_SPACE]) {
-        m_player->move(Direction::UP, -1);
+    if (state[SDL_SCANCODE_E]) {
+        //m_player->move(Direction::UP, -1);
+        BulletManager::add(m_player->getCamX(), m_player->getCamY(), m_player->getCamZ(), m_player->getRefX(),
+                           m_player->getRefY(), m_player->getRefZ(), m_player->getAlpha());
     }
     if (state[SDL_SCANCODE_C]) {
         m_player->move(Direction::DOWN, -1);
     }
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-        if(((SDL_MouseButtonEvent&)event).button == SDL_BUTTON_LEFT){
-            SDL_Log("CLIC");
-        }
-    }
-
     if (isColliding) {
         m_player->setCamX(oldPlayerXpos);
         m_player->setCamZ(oldPlayerZpos);
         m_player->setRefX(oldPlayerRefX);
         m_player->setRefZ(oldPlayerRefZ);
     }
-
-    PassiveManager::checkCollision(m_player);
-
 }
 
 void GameManager::update() {
     uiManager->update(m_player);
+    PassiveManager::checkCollision(m_player);
+    EnemyManager::update(*m_player);
+    vector<Enemy*> enemies;
+    int i = 0;
+    for( auto const& [k, val] : EnemyManager::s_enemies )
+    {
+        val->key = k;
+        enemies.push_back(val);
+        i++;
+    }
+    BulletManager::update();
+    BulletManager::checkCollision(enemies);
 }
 
 void GameManager::render() {
@@ -148,7 +150,7 @@ void GameManager::render() {
 
     //region GAME VIEWPORT rendering:
     glViewport(0, SCREEN_HEIGHT/6.f, SCREEN_WIDTH, SCREEN_HEIGHT - (SCREEN_HEIGHT/6.f));
-    EnemyManager::initialize();
+
     MapManager::generateWalls();
     m_player->cameraPos(); // position de la camera
     playerHud->drawFPSWeapon(m_player->getRefX(), 1, m_player->getRefZ(), m_player->getAlpha());
@@ -156,7 +158,8 @@ void GameManager::render() {
     MapManager::drawPlane();
     WallManager::drawWalls();
     PassiveManager::draw();
-    EnemyManager::update(*m_player);
+    EnemyManager::draw();
+    BulletManager::draw();
     //endregion
 
     //region UI VIEWPORT rendering:
@@ -165,7 +168,7 @@ void GameManager::render() {
 
     glFlush();
     SDL_GL_SwapWindow(window);
-    SDL_Delay(15);
+    //SDL_Delay(15);
 }
 
 void GameManager::quit() {

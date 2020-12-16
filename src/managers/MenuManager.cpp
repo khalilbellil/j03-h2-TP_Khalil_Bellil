@@ -39,7 +39,6 @@ void MenuManager::handleEvents() {
     if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
     }
     if (state[SDL_SCANCODE_SPACE]) {
-        SDL_Log("Start");
         isRunning = false;
         game->setIsRunning(true);
     }
