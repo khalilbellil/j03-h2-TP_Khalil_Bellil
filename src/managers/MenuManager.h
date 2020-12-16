@@ -17,12 +17,16 @@ class MenuManager {
         const Uint8* state;
         int dxMouse, dyMouse;
         GameManager* game;
+        TTF_Font * font;
+        bool playIsSelected = true;
     public:
         MenuManager();
         virtual ~MenuManager();
         void initialize(GameManager* _game);
         void handleEvents();
         void update();
+        void renderText(const TTF_Font *Font, const GLubyte& R, const GLubyte& G, const GLubyte& B, const double& X,
+                        const double& Y, const double& Z, const std::string& Text);
         void render();
         void quit();
         bool getIsRunning() const;

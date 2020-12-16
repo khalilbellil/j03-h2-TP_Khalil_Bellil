@@ -7,6 +7,7 @@
 #pragma once
 #include "../utils/IncludeHeader.h"
 #include "../entities/Wall.h"
+#include "UiManager.h"
 #include "WallManager.h"
 
 class MapManager {

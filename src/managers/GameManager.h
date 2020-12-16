@@ -19,7 +19,7 @@
 
 class GameManager {
 private:
-    SDL_Window *window;
+
     SDL_GLContext context;
     bool isRunning;
     SDL_Event event;
@@ -27,6 +27,7 @@ private:
     int dxMouse, dyMouse;
     UiManager* uiManager;
 public:
+    SDL_Window *window;
     GameManager();
     virtual ~GameManager();
     void initialize(const char* _windowTitle, int _windowPosX, int _windowPosY, int _screenWidth, int _screenHeight, bool fullScreen);
